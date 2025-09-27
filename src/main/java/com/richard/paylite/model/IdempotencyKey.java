@@ -28,7 +28,7 @@ public class IdempotencyKey {
     private String requestHash;
 
     @Lob
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String responseBody;
 
     @CreationTimestamp
