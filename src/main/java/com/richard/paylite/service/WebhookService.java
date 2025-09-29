@@ -11,12 +11,16 @@ import com.richard.paylite.model.WebhookEvent;
 import com.richard.paylite.repository.PaymentRepository;
 import com.richard.paylite.repository.WebhookEventRepository;
 import com.richard.paylite.util.SignatureUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class WebhookService {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebhookService.class);
 
     @Autowired
     private SignatureUtil signatureUtil;
@@ -32,6 +36,9 @@ public class WebhookService {
 
     @Transactional
     public void processWebhook(String signature, String rawPayload) {
+        logger.info("Received webhook with signature: {}", signature);
+        logger.info("Raw webhook payload: {}", rawPayload);
+
         if (!signatureUtil.isValidSignature(signature, rawPayload)) {
             throw new UnauthorizedException("Invalid webhook signature.");
         }
