@@ -159,6 +159,8 @@ HHandles incoming webhooks from a Payment Service Provider (PSP). The endpoint v
 
 A `200 OK` response with an empty body.
 
+**Note on Postman Testing:** When testing the `/api/v1/webhooks/psp` endpoint with the provided Postman collection, you may encounter an "Invalid webhook signature" error on the first attempt. This is due to a known issue with how Postman handles pre-request scripts that generate signatures. Simply sending the request a second time will resolve the issue.
+
 ## Idempotency
 
 The `POST /api/v1/payments` endpoint supports idempotency. If you make a request with an `Idempotency-Key` that has been used before with the same request body, the original response will be returned without creating a new payment. If the `Idempotency-Key` is the same but the request body is different, a `409 Conflict` error will be returned.
